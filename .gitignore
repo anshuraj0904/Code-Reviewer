@@ -1,0 +1,8 @@
+node_modules
+dist
+*.config.js
+*.json
+.env
+.env.development
+.env.test
+.env.production
