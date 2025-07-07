@@ -14,6 +14,8 @@ const ai_review = async(prompt)=> {
     model: "gemini-2.5-flash",
     contents: JSON.stringify(prompt),
   });
+//   console.log(`From Ai response: ${response.text}`);
+  
   return response.text;
 }
 
