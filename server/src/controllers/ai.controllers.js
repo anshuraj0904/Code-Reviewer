@@ -1,29 +1,24 @@
 import ai_review from "../services/ai.service.js";
 
+const ai_code_reviewr = async (req, res) => {
+  const { code } = req.body;
 
-
-const ai_review_controller = async(req,res)=>{
-    const {prompt} = req.body
-
-    // console.log(prompt);
-    
-    if(!prompt)
-    {
-        return res.status(404).send("Prompt not found!")
+  try {
+    if (!code) {
+      return res.status(404).send("Code not found!");
     }
 
-    const data = await ai_review(prompt)
+    const data = await ai_review(code);
 
-    if(!data)
-    {
-        return res.status(404).send("Something Went Wrong!") 
+    if (!data) {
+      return res.status(404).send("Something Went Wrong!");
     }
-    
-    // console.log(`From the controller: ${data}`);
-    
 
-    res.status(200).send(data)
-}
+    res.status(200).send(data);
+  } catch (err) {
+    console.error("Error generating AI review:", err);
+    res.status(500).json({ error: "Something went wrong!" });
+  }
+};
 
-
-export default ai_review_controller
+export default ai_code_reviewr;

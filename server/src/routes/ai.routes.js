@@ -1,9 +1,9 @@
 import { Router } from "express";
-import ai_review_controller from "../controllers/ai.controllers.js";
+import ai_code_reviewr from "../controllers/ai.controllers.js";
 
 const route = Router()
 
-route.post('/api/get_code_review', ai_review_controller)
+route.post('/api/get_code_review', ai_code_reviewr)
 
 
 export default route
