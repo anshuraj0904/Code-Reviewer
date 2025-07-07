@@ -6,15 +6,27 @@ const ai_code_review = async (req, res) => {
   if (!code) {
     return res.status(404).json("Code not found!");
   }
+
+  res.setHeader("Content-Type", "text/plain");
+  res.setHeader("Transfer-Encoding", "chunked");
+  // The lines above tell the browser:- “Main tumhe poora data ek saath nahi dunga, main thoda-thoda bhejunga, chunk-by-chunk”.
+
+
   try {
 
-    const data = await ai_review(code);
+    const stream = await ai_review(code);
 
-    if (!data) {
-      return res.status(404).json("Something Went Wrong!");
+    for await (const chunk of stream) {
+      res.write(chunk.text); // Send chunk by chunk
+      // Jitni baar Gemini ek new chunk deta hai, hum res.write() se woh turant frontend ko bhej dete hain.
     }
 
-    res.status(200).json(data);
+
+    res.end();
+    // Jab sab chunks mil jaayein, to response band kar dete hain.
+
+
+
   } catch (err) {
     console.error("Error generating AI review:", err);
     res.status(500).json({ error: "Something went wrong!" });

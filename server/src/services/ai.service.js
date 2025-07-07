@@ -8,7 +8,7 @@ const AI_API_KEY = process.env.GOOGLE_GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: AI_API_KEY });
 
 const ai_review = async (code) => {
-  const response = await ai.models.generateContent({
+  const stream = await ai.models.generateContentStream({
     model: "gemini-2.5-flash",
     contents: code,
     config: {
@@ -64,11 +64,17 @@ const ai_review = async (code) => {
         
     - Remember: The code can be in Javascript, Typescript, C++, Python, or Java. So, give the review keeping the syntax of that language in mind.
 
-    Your Review Must Contain:
-    - ❌ Bad Code: (if needed, a snippet showing the problem)
+    Your Review can Contain:
+    - ❌ Bad Code: (if needed, a snippet showing the problem, use it only if there is an issue.)
     - 🔍 Issues: A bullet-point list of detected problems (start each with ❌)
     - ✅ Recommended Fix: Clean, improved version of the code
     - ✏️ Summary: What you improved and why (keep it brief)
+
+    Note: Return any or, even all of these 4 things mentioned above(under Your Review can Contain: ), depending upon what is to be done. 
+      - If the code is good, just give the summary.
+      - If the code is bad, write bad code at the top, then showcase the issues and then give the recommended fix, and summary at lasyt.
+      - If the code is good, but can be made clean, then just give recommended fix and the summary. 
+
     
     
     Response Format:
@@ -112,8 +118,7 @@ const ai_review = async (code) => {
 `,
     },
   });
-
-  return response.text;
+   return stream
 };
 
 export default ai_review;
