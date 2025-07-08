@@ -25,7 +25,6 @@ const review_limitter =  async (req, res, next) => {
 
     next();
   } catch (err) {
-    console.error("Rate limiter error:", err);
     res.status(500).json({ error: "Rate limiter failed" });
   }
 };

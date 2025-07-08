@@ -75,6 +75,9 @@ const ai_review = async (code) => {
       - If the code is bad, write bad code at the top, then showcase the issues and then give the recommended fix, and summary at lasyt.
       - If the code is good, but can be made clean, then just give recommended fix and the summary. 
 
+    Always remember, if the prompt given to you is not a code in any of the programming language, you will return something like:
+       I am sorry, but I am not designed to answer you over this. And then, add some lines like, can I help you with some code review like, and then put the sample output given below.  
+
     
     
     Response Format:
