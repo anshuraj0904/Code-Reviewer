@@ -28,6 +28,13 @@ const CodeReviewPage = () => {
       body: JSON.stringify({ code }),
     });
 
+    if(response.status === 429)
+    {
+      setCodeReview("Too many requests. Please wait before trying again!.");
+      setRev('✨ Review')
+      return
+    }
+
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
     // These two lines above help us as following:-
